@@ -21,6 +21,33 @@ export default function Countries() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
+  useEffect(() => {
+    const fetchComCache = async () => {
+      const cacheKey = 'countriesData';
+      const cache = sessionStorage.getItem(cacheKey);
+
+      if (cache) {
+        setCountries(JSON.parse(cache));
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const resposta = await axios.get('https://restcountries.com/v3.1/all');
+        setCountries(resposta.data);
+        sessionStorage.setItem(cacheKey, JSON.stringify(resposta.data));
+      } catch (erro) {
+        alert('Erro ao buscar países');
+      } finally {
+        setIsLoading(false);
+      }
+
+    };
+
+    fetchComCache();
+  }, []);
+
+
   const fetchCountries = async (region = "") => {
     setIsLoading(true);
     try {
@@ -39,10 +66,6 @@ export default function Countries() {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchCountries();
-  }, []);
 
   const resetFilter = () => fetchCountries();
 
