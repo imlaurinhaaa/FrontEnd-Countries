@@ -31,6 +31,7 @@ export default function Countries() {
       setCountries(response.data);
       if (!region) {
         setAllCountries(response.data);
+        toast.success("Todos os países foram carregados com sucesso!");
       }
     } catch (error) {
       console.error("Erro ao carregar países:", error);
@@ -50,7 +51,7 @@ export default function Countries() {
   const currentCountries = countries.slice(startIndex, endIndex);
 
   const handleCardClick = (country) => {
-    toast.success(`Você clicou no país: ${country.name.common}`, {});
+    toast.info(`Você clicou no país: ${country.name.common}`, {});
   };
 
   return (
@@ -103,6 +104,8 @@ export default function Countries() {
         pageSize={itemsPerPage}
         total={countries.length}
         onChange={(page) => setCurrentPage(page)}
+        showSizeChanger={false}
+        hideOnSinglePage={true}
         style={{ textAlign: "center", marginTop: "20px" }}
       />
 
