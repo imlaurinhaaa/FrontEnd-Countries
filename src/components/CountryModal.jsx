@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import styles from "../styles/CountryModal.module.css";
 
 export default function CountyModel({ country, onClose }) {
@@ -6,7 +7,7 @@ export default function CountyModel({ country, onClose }) {
         <div className={styles.overlay} onClick={onClose}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <h2>{country.translations.por.common}</h2>
-                <img src={country.flags.png} alt={`Bandeira de ${country.translations.por.common}`} className={styles.flag} />
+                <Image width={100} height={100} src={country.flags.png} alt={`Bandeira de ${country.translations.por.common}`} className={styles.flag} />
                 <p>Nome Oficial: {country.translations.por.official}</p>
                 <p>Capital: {country.capital || "Não tem"}</p>
                 <p>Continente: {country.region}</p>
